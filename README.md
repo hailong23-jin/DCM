@@ -29,11 +29,21 @@ pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --e
 pip install -r requirements.txt
 ```
 
+### Download Pretrained checkpoints 
+
+[Google Drive](https://drive.google.com/drive/folders/19O05yGquBs8uoIoun_95gBlOgtZUKV36?usp=sharing)
+
+```
+mkdir ckpt
+
+# Then, place the checkpoints in the ckpt directory
+```
+
 ### Evaluation on SPair-71k
 
 ```
 python test.py --config configs/task_dinov2-b14_448x448_spair.py \
-    --model_path semi_supervise_spair/best_ema_model.pth  \
+    --model_path ckpt/spair/best_ema_model.pth  \
     --log_name test
 ```
 
@@ -41,8 +51,21 @@ python test.py --config configs/task_dinov2-b14_448x448_spair.py \
 
 ```
 python test.py --config  configs/task_dinov2-b14_448x448_pascal.py \
-    --model_path semi_supervise_pfpascal/best_ema_model.pth  \
+    --model_path ckpt/pfpascal/best_ema_model.pth  \
     --log_name test
+```
+
+### Evaluation on AP10k
+
+```
+# Train using (448, 448) and evaluate on (840, 840)
+python test.py --config configs/task_dinov2-b14_448x448_ap10k.py \
+    --model_path ckpt/ap10k_data_rate_0.5/best_ema_model.pth  \
+    --log_name test \
+    --cfg-options model.img_size=840 \
+        test_dataloader.dataset.target_size="(840,840)"  \
+        metric.img_size="(840,840)" \
+        test_dataloader.dataset.eval_type=cross-family  # `intra-species`, `cross-species`, `cross-family`
 ```
 
 
