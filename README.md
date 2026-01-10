@@ -90,5 +90,5 @@ python train.py \
 python train.py \
     --config configs/task_dinov2-b14_448x448_ap10k.py \
     --work-dir work_dirs/task_dinov2-b14_448x448_ap10k  \
-    --cfg-options train_dataloader.dataset.data_rate=0.5
+    --cfg-options train_dataloader.dataset.data_rate=0.1
 ```
